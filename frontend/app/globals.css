@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FAF8F5;
+  --surface: #FFFFFF;
+  --surface-muted: #F4EFEA;
+  --surface-warm: #EFE9E1;
+  --foreground: #1A1916;
+  --foreground-muted: #6B665E;
+  --foreground-subtle: #8E8981;
+  --border: #E8E2D9;
+  --border-light: #F0ECE4;
+  --border-dark: #32302C;
+  --accent: #2C332A;
+  --accent-soft: #ECEEEA;
+  --accent-olive: #485244;
+  --accent-amber: #B88348;
+  --pill-bg: #1C1B18;
+  --pill-fg: #FAF8F5;
+}
+
+/* Light mode enforcement - no dark mode overrides */
+html, body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: #2C332A;
+  color: #FAF8F5;
+}
+
+/* Scalloped edge decorative mask / pattern for Reference 2 artifact */
+.scalloped-edge {
+  position: relative;
+  background: #FAF8F5;
+}
+
+.scalloped-edge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Subtle editorial borders */
+.border-editorial {
+  border-color: var(--border);
+}
+
+.bg-surface-ivory {
+  background-color: var(--background);
+}
+
+.bg-surface-card {
+  background-color: var(--surface);
+}
+
+.bg-surface-muted {
+  background-color: var(--surface-muted);
+}
+
+/* Custom scrollbar for subtle feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D8D2C7;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #BDB7AB;
+}
+
+/* Smooth motion accessibility fallback */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

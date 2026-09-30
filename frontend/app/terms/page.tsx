@@ -1,91 +1,89 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
-import { ChevronRight, Scale, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Scale, AlertTriangle } from "lucide-react";
 import { Navbar } from "@/components/navigation/navbar";
-import { Footer } from "@/components/landing/footer/footer";
-
-export const metadata = {
-  title: "Terms of Service — Visora",
-  description: "User agreement and terms of use for Visora's consular interview simulation software.",
-};
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#1A1916] flex flex-col selection:bg-[#2C332A] selection:text-[#FAF8F5]">
-      {/* Signature Floating Pill Navbar */}
+    <div className="min-h-screen bg-[#FAF8F5] text-[#141414] selection:bg-[#2C332A] selection:text-[#FAF8F5]">
+      {/* Floating Capsule Navbar */}
       <Navbar />
 
-      {/* Main Content Area */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 sm:pt-36 lg:pt-40 pb-20 sm:pb-28">
+      <main className="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-24">
         
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#736E65] font-medium mb-8">
-          <Link href="/" className="hover:text-[#141414] transition-colors">
-            Visora
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-[#A39D93]" />
-          <span className="text-[#141414]">Terms of Service</span>
-        </div>
+        {/* Header */}
+        <div className="max-w-3xl mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFEBE4] text-[#485244] text-[12px] font-medium mb-6">
+            <Scale className="w-3.5 h-3.5" />
+            <span>Legal Agreement</span>
+          </div>
 
-        {/* Hero Header */}
-        <div className="max-w-4xl mb-14">
-          <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal text-[#141414] tracking-tight leading-[1.08] mb-6">
-            Terms of <span className="italic font-normal">Service</span>.
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] text-[#141414] leading-[1.12] mb-4">
+            Terms of Service
           </h1>
-          <p className="text-sm text-[#736E65] font-mono tracking-wide uppercase">
-            Effective Date: September 30, 2026
+
+          <p className="text-sm text-[#736E65] font-normal">
+            Effective: September 30, 2026
           </p>
         </div>
 
-        {/* Advisory Callout */}
-        <div className="p-8 rounded-2xl bg-white border border-[#E8E2D8] shadow-[0_2px_12px_rgba(0,0,0,0.02)] mb-14 flex items-start gap-4 max-w-4xl">
-          <AlertTriangle className="w-5 h-5 text-[#8C6D23] flex-shrink-0 mt-0.5" />
-          <div className="text-xs sm:text-sm text-[#6E695F] leading-relaxed font-light">
-            <strong className="text-[#141414] font-medium block mb-1">Educational & Practice Simulation Disclaimer</strong>
-            Visora is an independent preparatory simulator designed to improve candidate confidence, public speaking composure, and brevity under pressure. Visora is not affiliated with the U.S. Department of State, USCIS, or any embassy. Use of this platform does not constitute legal counsel or guarantee visa approval.
+        {/* Disclaimer Card */}
+        <div className="p-6 sm:p-7 rounded-2xl bg-[#F6F2EC] border border-[#E8E2D8] mb-10 flex items-start gap-4">
+          <AlertTriangle className="w-5 h-5 text-[#8C6D23] shrink-0 mt-0.5" />
+          <div className="text-xs sm:text-sm text-[#575249] leading-relaxed">
+            <strong className="text-[#141414] font-semibold block mb-1">Educational & Practice Simulation Notice</strong>
+            Visora is an independent preparatory platform designed to improve candidate confidence, public speaking composure, and answer brevity. Visora is not affiliated with the U.S. Department of State, USCIS, or any embassy, and does not provide legal immigration counsel or visa approval guarantees.
           </div>
         </div>
 
-        {/* Terms Sections */}
-        <div className="border-t border-[#EAE4DA] pt-14 space-y-12 max-w-4xl">
+        {/* Terms Content Card */}
+        <div className="p-8 sm:p-10 rounded-3xl bg-white border border-[#EAE4DA] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-8 text-sm text-[#575249] leading-relaxed">
           <section>
-            <h2 className="font-serif text-2xl text-[#141414] mb-4">1. Agreement to Terms</h2>
-            <p className="text-sm text-[#6E695F] leading-relaxed font-light">
-              By accessing or using the Visora web platform, mobile experiences, or associated simulation services, you agree to be bound by these Terms of Service.
+            <h2 className="text-lg font-bold text-[#141414] mb-2">1. Agreement to Terms</h2>
+            <p>
+              By accessing or using the Visora web platform and simulation features, you agree to comply with and be bound by these Terms of Service.
             </p>
           </section>
 
-          <section>
-            <h2 className="font-serif text-2xl text-[#141414] mb-4">2. Permitted & Prohibited Conduct</h2>
-            <p className="text-sm text-[#6E695F] leading-relaxed font-light mb-3">
-              You agree to use Visora solely for lawful educational preparation. You may not:
+          <section className="pt-6 border-t border-[#F2ECE1]">
+            <h2 className="text-lg font-bold text-[#141414] mb-2">2. Acceptable Use</h2>
+            <p className="mb-2">
+              You agree to use Visora solely for genuine individual preparation. You may not:
             </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-[#6E695F] font-light">
-              <li>Reverse engineer, scrape, or extract synthetic consular prompts or voice synthesis pipelines.</li>
-              <li>Use the system to forge fraudulent immigration declarations or deceptive DS-160 records.</li>
-              <li>Circumvent security protections or attempt to disrupt audio streaming server infrastructure.</li>
+            <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-[#66625B]">
+              <li>Scrape, reverse-engineer, or extract proprietary consular personas or prompt configurations.</li>
+              <li>Generate deceptive DS-160 declarations or attempt to abuse real-time voice streaming services.</li>
+              <li>Attempt unauthorized access to our WebSocket infrastructure.</li>
             </ul>
           </section>
 
-          <section>
-            <h2 className="font-serif text-2xl text-[#141414] mb-4">3. Intellectual Property Rights</h2>
-            <p className="text-sm text-[#6E695F] leading-relaxed font-light">
-              All software, simulated conversational personas, scoring algorithms, designs, brand marks, and user interfaces are the proprietary property of VISORA Inc.
+          <section className="pt-6 border-t border-[#F2ECE1]">
+            <h2 className="text-lg font-bold text-[#141414] mb-2">3. Intellectual Property</h2>
+            <p>
+              All software, algorithms, speech evaluation rubrics, user interfaces, and brand visual assets are the exclusive property of VISORA Inc.
             </p>
           </section>
 
-          <section>
-            <h2 className="font-serif text-2xl text-[#141414] mb-4">4. Limitation of Liability</h2>
-            <p className="text-sm text-[#6E695F] leading-relaxed font-light">
-              In no event shall VISORA Inc. or its developers be held liable for any decisions, denials, or outcomes made by government visa officers or consular posts.
+          <section className="pt-6 border-t border-[#F2ECE1]">
+            <h2 className="text-lg font-bold text-[#141414] mb-2">4. Limitation of Liability</h2>
+            <p>
+              VISORA Inc. and its contributors are not liable for consular decisions, interview outcomes, or indirect damages arising from use of the platform.
             </p>
           </section>
         </div>
 
-      </main>
+        {/* Minimal Bottom Bar */}
+        <div className="mt-16 pt-8 border-t border-[#EAE4DA] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8A847A]">
+          <Link href="/" className="inline-flex items-center gap-1.5 hover:text-[#141414] transition-colors">
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back to Visora
+          </Link>
+          <p>© {new Date().getFullYear()} VISORA Inc. All rights reserved.</p>
+        </div>
 
-      {/* Footer */}
-      <Footer />
+      </main>
     </div>
   );
 }

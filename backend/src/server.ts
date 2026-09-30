@@ -1,5 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import websocket from "@fastify/websocket";
+import { handleInterviewSocket } from "./websocket/interview.socket";
 
 const app = Fastify({
   logger: true,
@@ -12,12 +14,18 @@ async function startServer() {
     origin: "http://localhost:3000",
   });
 
+  await app.register(websocket);
+
   app.get("/health", async () => {
     return {
       status: "ok",
       service: "visora-backend",
       timestamp: new Date().toISOString(),
     };
+  });
+
+  app.get("/ws/interview", { websocket: true }, (socket) => {
+    handleInterviewSocket(socket);
   });
 
   try {
@@ -27,6 +35,7 @@ async function startServer() {
     });
 
     console.log(`Visora backend running on http://localhost:${PORT}`);
+    console.log(`Visora interview WebSocket: ws://localhost:${PORT}/ws/interview`);
   } catch (error) {
     app.log.error(error);
     process.exit(1);

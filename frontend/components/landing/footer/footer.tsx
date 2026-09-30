@@ -51,14 +51,14 @@ const SOCIAL_LINKS: SocialLink[] = [
 export function Footer() {
   return (
     <footer className="w-full bg-[#FAF8F5] border-t border-[#EAE4DA]">
-      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="w-full px-6 sm:px-10 lg:px-14 py-4 sm:py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
         
-        {/* Left Side: Preserved Copyright Line */}
+        {/* Leftmost Edge: Preserved Copyright Line */}
         <p className="text-xs sm:text-[13.5px] text-[#66625B] font-normal tracking-[-0.01em]">
           © {new Date().getFullYear()} VISORA Inc. All rights reserved.
         </p>
 
-        {/* Right Side: 4 Social Icons */}
+        {/* Rightmost Edge: 4 Social Icons */}
         <div className="flex items-center gap-5 text-[#141414]">
           {SOCIAL_LINKS.map((social) => (
             <a

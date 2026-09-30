@@ -49,113 +49,43 @@ const SOCIAL_LINKS: SocialLink[] = [
   },
 ];
 
-const FOOTER_COLUMNS = [
-  {
-    title: "Platform",
-    links: [
-      { label: "Overview & Features", href: "/features" },
-      { label: "Simulation Arena", href: "/setup" },
-      { label: "Question Bank & Scoring", href: "/features" },
-      { label: "Voice & Real-time AI", href: "/features" },
-    ],
-  },
-  {
-    title: "Visa Tracks",
-    links: [
-      { label: "F-1 Student Visa", href: "/setup" },
-      { label: "B-1 / B-2 Visitor Visa", href: "/setup" },
-      { label: "H-1B Work Visa", href: "/setup" },
-      { label: "Consular Mock Scenarios", href: "/setup" },
-    ],
-  },
-  {
-    title: "Company & Legal",
-    links: [
-      { label: "About Visora", href: "/about" },
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Cookie Policy", href: "/cookies" },
-    ],
-  },
-];
-
 export function Footer() {
   return (
-    <footer className="relative w-full bg-[#FAF8F5] border-t border-[#EAE4DA] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-14 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14">
-          
-          {/* Left Column: Brand, Description & Socials (5 cols) */}
-          <div className="md:col-span-5 flex flex-col items-start pr-0 md:pr-6">
-            <Link href="/" className="inline-block hover:opacity-90 transition-opacity mb-4">
-              <img
-                src="/images/visora-logo-dark.png"
-                alt="Visora"
-                className="h-6 sm:h-7 w-auto object-contain mix-blend-multiply"
-              />
-            </Link>
+    <footer className="w-full bg-[#FAF8F5] border-t border-[#EAE4DA]">
+      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-4">
+        
+        {/* Left Side: Copyright Line */}
+        <p className="text-xs sm:text-[13px] text-[#736E65] order-2 sm:order-1 text-center sm:text-left font-normal">
+          © {new Date().getFullYear()} VISORA Inc. All rights reserved.
+        </p>
 
-            <p className="text-sm text-[#736E65] max-w-sm leading-relaxed mb-6 font-normal">
-              Visora empowers visa candidates to transform high-stakes interview preparation into calm, fluent mastery with real-time AI consular simulations.
-            </p>
-
-            {/* Social Links Row */}
-            <div className="flex items-center gap-4 text-[#1A1916]">
-              {SOCIAL_LINKS.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.name}
-                  className="text-[#22211E] hover:text-[#485244] hover:opacity-80 transition-all flex items-center justify-center"
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Column: 3 Navigation Columns (7 cols) */}
-          <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
-            {FOOTER_COLUMNS.map((col) => (
-              <div key={col.title} className="flex flex-col">
-                <h3 className="text-xs font-semibold text-[#141414] tracking-wider uppercase mb-4">
-                  {col.title}
-                </h3>
-                <ul className="space-y-2.5">
-                  {col.links.map((link) => (
-                    <li key={link.label}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-[#736E65] hover:text-[#141414] transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
+        {/* Mid: Logo */}
+        <div className="order-1 sm:order-2 flex items-center justify-center">
+          <Link href="/" className="inline-block hover:opacity-85 transition-opacity">
+            <img
+              src="/images/visora-logo-dark.png"
+              alt="Visora"
+              className="h-5 sm:h-5.5 w-auto object-contain mix-blend-multiply"
+            />
+          </Link>
         </div>
 
-        {/* Bottom Bar: Copyright & Legal */}
-        <div className="mt-12 pt-6 border-t border-[#EAE4DA] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8A847A]">
-          <p>© {new Date().getFullYear()} VISORA Inc. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy" className="hover:text-[#141414] transition-colors">
-              Privacy
-            </Link>
-            <Link href="/terms" className="hover:text-[#141414] transition-colors">
-              Terms
-            </Link>
-            <Link href="/cookies" className="hover:text-[#141414] transition-colors">
-              Cookies
-            </Link>
-          </div>
+        {/* Right Side: 4 Social Logos */}
+        <div className="flex items-center gap-4.5 text-[#1A1916] order-3">
+          {SOCIAL_LINKS.map((social) => (
+            <a
+              key={social.name}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.name}
+              className="text-[#22211E] hover:text-[#485244] hover:scale-105 transition-all flex items-center justify-center"
+            >
+              {social.icon}
+            </a>
+          ))}
         </div>
+
       </div>
     </footer>
   );

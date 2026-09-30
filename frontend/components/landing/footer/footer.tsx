@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { AirplaneGame } from "./airplane-game";
 
 interface SocialLink {
   name: string;
@@ -13,6 +12,8 @@ interface SocialLink {
 const SOCIAL_LINKS: SocialLink[] = [
   {
     name: "X",
+
+    
     href: "https://x.com",
     icon: (
       <svg className="w-[22px] h-[22px] fill-current" viewBox="0 0 24 24" aria-hidden="true">

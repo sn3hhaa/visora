@@ -1,128 +1,177 @@
-"use client";
-
 import * as React from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Target, Shield, Compass, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
-import { Navbar } from "@/components/navigation/navbar";
+import { ArrowLeft, Target, Shield, Compass, Sparkles, Award, ArrowUpRight } from "lucide-react";
+import { Footer } from "@/components/landing/footer/footer";
+
+export const metadata = {
+  title: "About Visora | Precision Consular Simulation",
+  description: "Learn how Visora is reimagining visa interview readiness through multi-modal AI intelligence and real consular pedagogy.",
+};
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#141414] selection:bg-[#2C332A] selection:text-[#FAF8F5]">
-      {/* Floating Capsule Navbar */}
-      <Navbar />
-
-      <main className="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 pb-24">
-        
-        {/* Header Section */}
-        <div className="max-w-3xl mb-14 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFEBE4] text-[#485244] text-[12px] font-medium mb-6">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>About Visora</span>
+    <div className="min-h-screen bg-[#FAF8F5] text-[#141414] flex flex-col selection:bg-[#485244] selection:text-white">
+      {/* Top Navigation */}
+      <header className="sticky top-0 z-40 w-full bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#EAE4DA]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-3 group">
+            <img
+              src="/images/visora-logo-dark.png"
+              alt="Visora"
+              className="h-6 sm:h-7 w-auto object-contain mix-blend-multiply transition-transform group-hover:scale-105"
+            />
+          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-[#736E65] hover:text-[#141414] transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Back to Home
+            </Link>
+            <Link
+              href="/setup"
+              className="inline-flex items-center justify-center px-4 py-2 text-xs font-semibold uppercase tracking-wider bg-[#141414] text-[#FAF8F5] rounded-full hover:bg-[#485244] transition-all shadow-xs"
+            >
+              Start Simulator
+            </Link>
           </div>
+        </div>
+      </header>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] text-[#141414] leading-[1.12] mb-5">
-            Transforming interview anxiety into calm, articulate performance.
+      {/* Main Content */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-20 lg:py-24">
+        
+        {/* Hero Section */}
+        <div className="max-w-4xl mb-16 lg:mb-20">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFEBE4] text-[#485244] text-xs font-medium tracking-wide uppercase mb-6">
+            <Sparkles className="w-3.5 h-3.5" />
+            Our Mission & Philosophy
+          </div>
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-light text-[#141414] tracking-tight leading-[1.15] mb-6">
+            Democratizing world-class visa interview mastery.
           </h1>
-
-          <p className="text-base sm:text-lg text-[#66625B] leading-[1.6] font-normal">
-            Visora was created to eliminate the unpredictability of high-stakes consular conversations. We combine real-time voice intelligence, behavioral analysis, and consular pedagogy to give candidates true conversational mastery.
+          <p className="text-lg sm:text-xl text-[#736E65] leading-relaxed font-light">
+            Every year, millions of brilliant students, professionals, and travelers face life-defining visa interviews with anxiety and uncertainty. Visora transforms unpredictable interviews into structured, high-confidence outcomes through cutting-edge consular simulation.
           </p>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5 mb-16">
-          {[
-            { value: "10,000+", label: "Simulations completed" },
-            { value: "<300ms", label: "Voice response latency" },
-            { value: "94.8%", label: "Candidate confidence score" },
-            { value: "24/7", label: "Instant adaptive practice" },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="p-6 rounded-2xl bg-white border border-[#EAE4DA] shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
-            >
-              <div className="text-2xl sm:text-3xl font-bold text-[#141414] tracking-tight mb-1">
-                {stat.value}
+        {/* 3 Core Pillars Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          <div className="p-8 rounded-2xl bg-white border border-[#EAE4DA] shadow-xs flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-[#FAF8F5] border border-[#EAE4DA] flex items-center justify-center text-[#485244] mb-6">
+                <Target className="w-6 h-6" />
               </div>
-              <div className="text-xs text-[#736E65] font-medium leading-snug">
-                {stat.label}
-              </div>
+              <h3 className="text-xl font-medium text-[#141414] mb-3">Authentic Consular Tone</h3>
+              <p className="text-sm text-[#736E65] leading-relaxed">
+                Consular officers operate under strict time limits, rapid cadence, and specific legal frameworks (such as INA 214(b) non-immigrant intent). Visora replicates this exact atmospheric pressure.
+              </p>
             </div>
-          ))}
-        </div>
+            <div className="mt-6 pt-4 border-t border-[#F2ECE1] text-xs font-medium text-[#485244] uppercase tracking-wider">
+              Sub-second Latency
+            </div>
+          </div>
 
-        {/* 3 Core Pillars */}
-        <div className="space-y-4 sm:space-y-6 mb-16">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#141414]">
-            Built on three core principles
-          </h2>
+          <div className="p-8 rounded-2xl bg-white border border-[#EAE4DA] shadow-xs flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-[#FAF8F5] border border-[#EAE4DA] flex items-center justify-center text-[#485244] mb-6">
+                <Compass className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-medium text-[#141414] mb-3">Multi-Modal Diagnostics</h3>
+              <p className="text-sm text-[#736E65] leading-relaxed">
+                Interviews are decided not just by what you say, but how you present. Our system evaluates voice pitch stability, filler words, eye contact engagement, and answer conciseness in real-time.
+              </p>
+            </div>
+            <div className="mt-6 pt-4 border-t border-[#F2ECE1] text-xs font-medium text-[#485244] uppercase tracking-wider">
+              Real-time Feedback
+            </div>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              {
-                icon: Target,
-                title: "Calibrated Pressure",
-                desc: "We replicate the rapid pacing, follow-up scrutiny, and legal frameworks (like INA 214(b)) used by real embassy officers.",
-              },
-              {
-                icon: Compass,
-                title: "Multi-Modal Intelligence",
-                desc: "Real-time diagnostics across speech cadence, vocal pitch stability, and eye contact poise give you 360° feedback.",
-              },
-              {
-                icon: Shield,
-                title: "Strict Confidentiality",
-                desc: "Your DS-160 details, financials, and transcripts are 100% private. We never train public AI models on your sessions.",
-              },
-            ].map((pillar) => {
-              const Icon = pillar.icon;
-              return (
-                <div
-                  key={pillar.title}
-                  className="p-7 rounded-2xl bg-white border border-[#EAE4DA] shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="w-10 h-10 rounded-xl bg-[#FAF8F5] border border-[#EAE4DA] flex items-center justify-center text-[#485244] mb-5">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-base font-semibold text-[#141414] mb-2">{pillar.title}</h3>
-                    <p className="text-sm text-[#66625B] leading-[1.55]">{pillar.desc}</p>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="p-8 rounded-2xl bg-white border border-[#EAE4DA] shadow-xs flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-[#FAF8F5] border border-[#EAE4DA] flex items-center justify-center text-[#485244] mb-6">
+                <Shield className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-medium text-[#141414] mb-3">Privacy & Ethics First</h3>
+              <p className="text-sm text-[#736E65] leading-relaxed">
+                Your credentials, financial narratives, and personal background documents are confidential. Visora never trains public models on candidate simulation transcripts.
+              </p>
+            </div>
+            <div className="mt-6 pt-4 border-t border-[#F2ECE1] text-xs font-medium text-[#485244] uppercase tracking-wider">
+              Zero-Data Leakage
+            </div>
           </div>
         </div>
 
-        {/* Sleek CTA Card */}
-        <div className="p-8 sm:p-10 rounded-3xl bg-[#191919] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-[0_12px_36px_rgba(0,0,0,0.12)]">
-          <div>
-            <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-2">
-              Ready to start your first simulation?
-            </h3>
-            <p className="text-sm text-[#B5B0A6] max-w-md leading-relaxed">
-              Step into the adaptive interview room in under 30 seconds.
+        {/* Detailed Story & Methodology */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start py-12 border-t border-[#EAE4DA]">
+          <div className="lg:col-span-4">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#485244]">The Visora Story</span>
+            <h2 className="text-2xl sm:text-3xl font-serif text-[#141414] mt-2 mb-4">
+              Built by immigrants, educators, and AI researchers.
+            </h2>
+            <p className="text-sm text-[#736E65] leading-relaxed">
+              We experienced the anxiety of the visa window firsthand. Visora was crafted to replace blind panic with calibrated, repeatable confidence.
+            </p>
+          </div>
+
+          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="p-6 rounded-xl bg-[#F6F2EC] border border-[#E8E2D8]">
+              <div className="text-3xl font-serif text-[#141414] mb-2">10,000+</div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-[#485244] mb-2">Simulated Scenarios</div>
+              <p className="text-xs text-[#736E65] leading-relaxed">
+                Covering F-1 OPT transitions, STEM extensions, B-1 business travel itineraries, and H-1B specialty occupation interviews.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-[#F6F2EC] border border-[#E8E2D8]">
+              <div className="text-3xl font-serif text-[#141414] mb-2">94.8%</div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-[#485244] mb-2">Candidate Confidence Score</div>
+              <p className="text-xs text-[#736E65] leading-relaxed">
+                Candidates report feeling significantly more composed, concise, and structured during their actual embassy appointments.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-[#F6F2EC] border border-[#E8E2D8]">
+              <div className="text-3xl font-serif text-[#141414] mb-2">&lt; 300ms</div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-[#485244] mb-2">Live Response Latency</div>
+              <p className="text-xs text-[#736E65] leading-relaxed">
+                Powered by next-generation voice intelligence to simulate natural conversational interruptions and follow-ups.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-[#F6F2EC] border border-[#E8E2D8]">
+              <div className="text-3xl font-serif text-[#141414] mb-2">24/7</div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-[#485244] mb-2">Unlimited Repetitions</div>
+              <p className="text-xs text-[#736E65] leading-relaxed">
+                Practice at your own pace anytime, anywhere, before stepping up to the consular counter.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA Strip */}
+        <div className="mt-16 p-10 sm:p-14 rounded-3xl bg-[#141414] text-[#FAF8F5] flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="max-w-xl">
+            <h3 className="text-2xl sm:text-3xl font-serif font-light mb-3">Ready to experience the consular simulator?</h3>
+            <p className="text-sm text-[#A39D93] leading-relaxed">
+              Step into an adaptive interview arena configured specifically for your visa track, university, or sponsor company.
             </p>
           </div>
           <Link
             href="/setup"
-            className="inline-flex items-center gap-2 bg-white text-[#191919] hover:bg-[#F2EDE5] text-xs font-semibold px-5 py-3 rounded-full transition-all duration-150 shadow-sm shrink-0"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#FAF8F5] text-[#141414] font-semibold text-xs uppercase tracking-wider hover:bg-[#EAE4DA] transition-all whitespace-nowrap shadow-md"
           >
-            <span>Launch Simulator</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            Launch Free Simulation
+            <ArrowUpRight className="w-4 h-4" />
           </Link>
-        </div>
-
-        {/* Minimal Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-[#EAE4DA] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8A847A]">
-          <Link href="/" className="inline-flex items-center gap-1.5 hover:text-[#141414] transition-colors">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Back to Visora
-          </Link>
-          <p>© {new Date().getFullYear()} VISORA Inc. All rights reserved.</p>
         </div>
 
       </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

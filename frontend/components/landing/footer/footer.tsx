@@ -51,18 +51,18 @@ const SOCIAL_LINKS: SocialLink[] = [
 
 export function Footer() {
   return (
-    <footer className="w-full bg-[#FAF8F5] border-t border-[#EAE4DA]">
-      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
+    <footer className="w-full bg-[#FAF8F5] border-t border-[#EAE4DA]/80">
+      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4">
         <div className="grid grid-cols-1 sm:grid-cols-3 items-center gap-3 sm:gap-0">
           
           {/* Left: Preserved Copyright Line */}
           <div className="flex items-center justify-center sm:justify-start">
-            <p className="text-xs text-[#736E65] font-normal tracking-tight">
+            <p className="text-[11.5px] sm:text-xs text-[#736E65] font-normal tracking-tight">
               © {new Date().getFullYear()} VISORA Inc. All rights reserved.
             </p>
           </div>
 
-          {/* Center: Visora Logo directly below Try Visora */}
+          {/* Center: Visora Logo directly beneath Try Visora button */}
           <div className="flex items-center justify-center">
             <Link
               href="/"
@@ -71,13 +71,13 @@ export function Footer() {
               <img
                 src="/images/visora-logo-dark.png"
                 alt="Visora"
-                className="h-4 sm:h-[18px] w-auto object-contain mix-blend-multiply"
+                className="h-3.5 sm:h-4 w-auto object-contain mix-blend-multiply"
               />
             </Link>
           </div>
 
           {/* Right: 4 Social Icons */}
-          <div className="flex items-center justify-center sm:justify-end gap-3.5 text-[#1A1916]">
+          <div className="flex items-center justify-center sm:justify-end gap-3 text-[#1A1916]">
             {SOCIAL_LINKS.map((social) => (
               <a
                 key={social.name}
@@ -85,7 +85,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.name}
-                className="text-[#22211E] hover:text-[#485244] hover:opacity-75 transition-all flex items-center justify-center"
+                className="text-[#22211E] hover:text-[#485244] hover:opacity-70 transition-all flex items-center justify-center"
               >
                 {social.icon}
               </a>

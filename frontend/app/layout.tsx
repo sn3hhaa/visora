@@ -21,11 +21,6 @@ export const metadata: Metadata = {
   title: "VISORA — Practice the conversation before it becomes real",
   description:
     "A premium conversational interview platform. Realistic sessions that adapt to your answers, challenge vague responses, and show you how you communicate under pressure.",
-  icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
-  },
 };
 
 export default function RootLayout({

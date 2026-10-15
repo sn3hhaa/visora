@@ -43,7 +43,20 @@ The backend currently runs in **demo mode**: a deterministic, rule-based officer
 ```bash
 cd frontend
 npm install
-npm run dev            # http://localhost:3000
+cp .env.example .env.local   # optional; defaults point at the local backend
+npm run dev                  # http://localhost:3000
 ```
 
-The interview room is not yet connected to the backend.
+| Variable | Default | Purpose |
+|---|---|---|
+| `NEXT_PUBLIC_INTERVIEW_WS_URL` | `ws://localhost:4000/ws/interview` | Interview backend WebSocket (`wss://` in production) |
+
+The interview room (`/interview`) is connected to the backend. Start the backend first, complete `/setup`, then press **Start interview**: the officer's questions come from the backend session, and you answer by typing. A page reload or a dropped connection re-attaches to the same session.
+
+What is not real yet, and is labelled as such in the UI:
+
+- The officer is the rule-based **demo** provider, shown as "Demo mode".
+- Answers are typed; the microphone button is disabled until voice input is implemented.
+- The officer tile is a static image; the MuseTalk avatar is not integrated.
+- The camera tile is a local preview only. It is never recorded or sent to the server.
+- There is no results page yet.

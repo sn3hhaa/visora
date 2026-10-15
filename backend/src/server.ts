@@ -1,45 +1,33 @@
-import Fastify from "fastify";
-import cors from "@fastify/cors";
-import websocket from "@fastify/websocket";
-import { handleInterviewSocket } from "./websocket/interview.socket";
+import { buildApp } from "./app";
+import { loadConfig } from "./config/env";
 
-const app = Fastify({
-  logger: true,
-});
+async function main() {
+  const config = loadConfig();
+  const app = await buildApp(config);
 
-const PORT = Number(process.env.PORT) || 4000;
-
-async function startServer() {
-  await app.register(cors, {
-    origin: "http://localhost:3000",
-  });
-
-  await app.register(websocket);
-
-  app.get("/health", async () => {
-    return {
-      status: "ok",
-      service: "visora-backend",
-      timestamp: new Date().toISOString(),
-    };
-  });
-
-  app.get("/ws/interview", { websocket: true }, (socket) => {
-    handleInterviewSocket(socket);
-  });
+  const shutdown = async (signal: string) => {
+    app.log.info({ signal }, "shutting down");
+    await app.close();
+    process.exit(0);
+  };
+  process.once("SIGINT", () => void shutdown("SIGINT"));
+  process.once("SIGTERM", () => void shutdown("SIGTERM"));
 
   try {
-    await app.listen({
-      port: PORT,
-      host: "0.0.0.0",
-    });
-
-    console.log(`Visora backend running on http://localhost:${PORT}`);
-    console.log(`Visora interview WebSocket: ws://localhost:${PORT}/ws/interview`);
+    await app.listen({ port: config.PORT, host: config.HOST });
+    app.log.info(`Interview WebSocket: ws://localhost:${config.PORT}/ws/interview`);
   } catch (error) {
-    app.log.error(error);
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code === "EADDRINUSE") {
+      app.log.error(`Port ${config.PORT} is already in use. Stop the other process or set PORT in backend/.env.`);
+    } else {
+      app.log.error(error);
+    }
     process.exit(1);
   }
 }
 
-startServer();
+main().catch((error) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exit(1);
+});

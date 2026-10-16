@@ -69,7 +69,7 @@ Profile fields are optional strings (max 500 chars). `difficulty` is one of `com
 | `agent_processing` | — (the officer is deciding the next turn) |
 | `next_question` | `entry`, `questionNumber`, `maxQuestions` |
 | `transcript_update` | `entry` (the candidate's accepted answer) |
-| `interview_completed` | `sessionId`, `reason` (`concluded` \| `candidate_ended` \| `expired`), `closing` (officer entry or `null`) |
+| `interview_completed` | `sessionId`, `reason` (`concluded` \| `candidate_ended` \| `expired`), `closing` (officer entry or `null`), `report` (`SessionReport`, see [analytics.md](analytics.md)) |
 | `error` | `code`, `message`, `recoverable` |
 | `pong` | — |
 

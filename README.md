@@ -71,9 +71,10 @@ Visora simulates that conversation. You pick a visa category, fill in your profi
 - 🔁 **Resilient connection** — drop your network or reload the page mid-interview and you rejoin the same session with the transcript intact.
 - 🛡️ **Never stalls** — LLM-style decisions are validated before use; anything invalid, slow or failing falls back to the deterministic officer.
 - 🔐 **Private by default** — the camera tile is a local preview only; nothing is recorded or uploaded, and the microphone is never accessed yet.
+- 📊 **Real results** — after each interview, a report built only from that session: measured metrics (duration, words, response time, fillers, hedges, follow-ups) kept separate from rule-based ratings of completeness, specificity and directness, plus a question-by-question breakdown. No invented scores.
 - 💸 **Runs for ₹0** — demo mode needs no API keys, no GPU and no paid service.
 
-**Coming next** — see the [roadmap](#-roadmap): live LLM officer, results & analytics, voice conversation, and a MuseTalk lip-synced officer avatar.
+**Coming next** — see the [roadmap](#-roadmap): live LLM officer (and AI-assessed relevance and consistency), voice conversation, and a MuseTalk lip-synced officer avatar.
 
 <table>
   <tr>
@@ -83,6 +84,12 @@ Visora simulates that conversation. You pick a visa category, fill in your profi
   <tr>
     <td align="center"><sub>Landing page</sub></td>
     <td align="center"><sub>Setup — choose a category, profile and difficulty</sub></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/assets/screenshots/results.jpg" alt="Results page: rule-based ratings for completeness, specificity and directness, with relevance and consistency marked not assessed"></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><sub>Results — rule-based ratings from a real F-1 session; qualities that need an AI evaluator are marked not assessed</sub></td>
   </tr>
 </table>
 
@@ -180,16 +187,18 @@ visora/
 │   ├── app/
 │   │   ├── page.tsx               Landing page
 │   │   ├── setup/                 Category → profile → difficulty → summary
-│   │   └── interview/             Interview room
+│   │   ├── interview/             Interview room
+│   │   └── results/               Post-interview report
 │   ├── components/
 │   │   ├── landing/               Hero, contexts, features, performance, footer…
 │   │   ├── setup/                 Setup steps
 │   │   ├── interview/             Transcript, answer composer, session stats, camera settings
+│   │   ├── results/               Report sections and question breakdown
 │   │   └── navigation/            Floating navbar
 │   ├── hooks/
 │   │   └── use-interview-session.ts   WebSocket session lifecycle + reconnect
 │   ├── lib/
-│   │   ├── realtime/              Protocol types, room-state reducer, setup payload
+│   │   ├── realtime/              Protocol and report types, room-state reducer, setup payload
 │   │   ├── constants/             Contexts, navigation
 │   │   └── mock/                  Sample data for landing-page previews only
 │   ├── store/                     Zustand setup store
@@ -199,6 +208,7 @@ visora/
 │   ├── src/
 │   │   ├── server.ts · app.ts     Entry point and app factory
 │   │   ├── config/env.ts          Validated environment config
+│   │   ├── analytics/             Post-interview report builder
 │   │   ├── interview/             Contexts, engine, session manager, answer analysis
 │   │   ├── llm/                   Provider interface + deterministic demo provider
 │   │   └── websocket/             Protocol schema and socket handler
@@ -301,7 +311,7 @@ Honest status — what runs today versus what is still being built.
 | Adaptive demo officer | ✅ Done | Deterministic, rule-based; no API keys |
 | Interview room ↔ backend | ✅ Done | Real transcript, reconnect & resume, typed answers |
 | Live LLM officer | 🚧 Next | Groq free tier, structured output, demo fallback |
-| Results & analytics | 🚧 Next | Measured metrics + AI-assisted feedback |
+| Results & analytics | ✅ Done | Measured metrics + rule-based ratings — [details](docs/analytics.md). AI-assessed relevance/consistency come with the LLM officer |
 | Voice input / spoken officer | 📋 Planned | STT + TTS behind provider interfaces |
 | MuseTalk avatar | 📋 Planned | Separate Python GPU service; officer tile is a static image today |
 | Branded loader & favicon | 📋 Planned | Wordmark reveal, V monogram |
@@ -311,12 +321,11 @@ What the UI labels as not-real-yet: the **Demo mode** badge marks the rule-based
 
 ## ✦ Roadmap
 
-1. **Results & analytics** — duration, word count, words per minute, response latency, filler words; question-by-question breakdown on a real results page.
-2. **Live LLM officer** — OpenAI-compatible client (Groq free tier first), structured decisions validated by the existing engine, demo fallback on failure.
-3. **Voice** — browser audio capture, streaming STT, officer TTS, turn-taking and interruption handling.
-4. **MuseTalk 1.5 avatar** — a Python service that lip-syncs the officer's speech; tested on free notebook GPUs, with a clearly labelled fallback when no GPU is available.
-5. **Polish** — branded VISORA loader, favicon, metadata, responsive and accessibility pass.
-6. **Ship** — CI, end-to-end tests, deployment and cost documentation.
+1. **Live LLM officer** — OpenAI-compatible client (Groq free tier first), structured decisions validated by the existing engine, demo fallback on failure; an LLM evaluator for relevance and consistency.
+2. **Voice** — browser audio capture, streaming STT, officer TTS, turn-taking and interruption handling.
+3. **MuseTalk 1.5 avatar** — a Python service that lip-syncs the officer's speech; tested on free notebook GPUs, with a clearly labelled fallback when no GPU is available.
+4. **Polish** — branded VISORA loader, favicon, metadata, responsive and accessibility pass.
+5. **Ship** — CI, end-to-end tests, deployment and cost documentation.
 
 The full plan with phases and design decisions is in [docs/roadmap.md](docs/roadmap.md).
 
@@ -327,6 +336,7 @@ The full plan with phases and design decisions is in [docs/roadmap.md](docs/road
 | [Architecture](docs/architecture.md) | Components, data flow, state ownership, error handling |
 | [Interview engine](docs/interview-engine.md) | Session state, decisions, validation, difficulty, demo rules |
 | [Realtime protocol](docs/realtime-protocol.md) | Every WebSocket message, errors, lifecycle, reconnection |
+| [Results & analytics](docs/analytics.md) | Report metrics, rating rules, delivery, `GET /sessions/:id/report` |
 | [Roadmap](docs/roadmap.md) | Phases, planned providers and design decisions |
 | [Contributing](CONTRIBUTING.md) | Setup, branching, commit style, pull requests |
 

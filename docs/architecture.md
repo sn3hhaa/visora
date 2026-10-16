@@ -21,6 +21,8 @@ flowchart TB
     subgraph BE["backend/ · Fastify 5"]
         direction TB
         Health["GET /health"]
+        Report["GET /sessions/:id/report"]
+        Analytics["analytics/report.ts"]
         Socket["/ws/interview<br/>interview.socket.ts"]
         Protocol["protocol.ts<br/>Zod schemas"]
         Sessions["SessionManager<br/>Map + idle sweep"]
@@ -35,6 +37,9 @@ flowchart TB
         Engine --> Provider --> Demo
         Demo --> Analysis
         Engine --> Contexts
+        Socket --> Analytics
+        Report --> Analytics
+        Analytics --> Analysis
     end
 
     Hook <-->|"JSON over WebSocket"| Socket
@@ -58,7 +63,8 @@ flowchart TB
 | Interview room | `app/interview/page.tsx`, `components/interview/` | Officer tile, local camera preview, transcript, answer composer, session facts. |
 | Session hook | `hooks/use-interview-session.ts` | Owns the WebSocket: connect, keepalive, reconnect with backoff, resume after reload. |
 | Room state | `lib/realtime/interview-state.ts` | Pure reducer from server messages to UI state; de-duplicates transcript entries. |
-| Protocol types | `lib/realtime/protocol.ts` | Client mirror of the backend protocol. |
+| Protocol types | `lib/realtime/protocol.ts`, `lib/realtime/report.ts` | Client mirror of the backend protocol and report; report cache and HTTP fetch. |
+| Results page | `app/results/page.tsx`, `components/results/` | Renders the session report: measured metrics, rule-based assessments, feedback, question-by-question breakdown. |
 
 **State ownership.** The setup store owns *what the candidate chose*. The backend session owns *what happened in the interview*. The room reducer only reflects server messages: on resume, the server's snapshot replaces the local transcript.
 
@@ -66,13 +72,14 @@ flowchart TB
 
 | Piece | Location | Role |
 |---|---|---|
-| App factory | `src/app.ts` | Registers CORS, WebSocket, `/health`, `/ws/interview`; wires dependencies. |
+| App factory | `src/app.ts` | Registers CORS, WebSocket, `/health`, `/sessions/:id/report`, `/ws/interview`; wires dependencies. |
 | Config | `src/config/env.ts` | Zod-validated environment; fails fast with a readable error. |
 | Socket handler | `src/websocket/interview.socket.ts` | Rate limiting, JSON parsing, validation, routing to the engine, delivery to the attached socket. |
 | Protocol | `src/websocket/protocol.ts` | Client message schemas and server message types. |
 | Session manager | `src/interview/session-manager.ts` | In-memory sessions, UUID v4 IDs, idle expiry, capacity cap. |
 | Engine | `src/interview/engine.ts` | Turn lifecycle, provider timeout, decision validation, fallback. |
 | Contexts | `src/interview/contexts.ts` | F-1 / H-1B / B1/B2 topics, questions, probes; difficulty policies. |
+| Analytics | `src/analytics/report.ts` | Builds the post-interview report from the transcript — see [analytics.md](analytics.md). |
 | Providers | `src/llm/` | `InterviewProvider` interface and the deterministic `DemoProvider`. |
 
 See [interview-engine.md](interview-engine.md) for decision rules and [realtime-protocol.md](realtime-protocol.md) for every message.

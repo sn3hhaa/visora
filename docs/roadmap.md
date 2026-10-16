@@ -11,20 +11,15 @@ Visora is built in small, verifiable milestones. Each one keeps the app runnable
 | 2 | Backend architecture: session manager, state machine, validated config |
 | 3 | Functional text interview: deterministic, adaptive demo officer for F-1, H-1B and B1/B2 |
 | 4 | Frontend integration: interview room on the real WebSocket session; scripted conversation and fake telemetry removed |
+| 5 | Results & analytics: session report with measured metrics, rule-based ratings, feedback and question breakdown; `/results` page and `GET /sessions/:id/report` ([details](analytics.md)) |
 
 ## Next
-
-### Results & analytics
-- Backend endpoint returning a finished session's result.
-- **Measured metrics:** interview duration, word count, words per minute, response latency, filler words.
-- **Assessed qualities** (shown separately from measured metrics): relevance, clarity, specificity, completeness, consistency.
-- Question-by-question breakdown, strengths, areas to sharpen.
-- Results page fed by real data instead of `lib/mock`.
 
 ### Live LLM officer
 - OpenAI-compatible client; Groq free tier first (Qwen3 32B / Llama 3.3 70B), OpenRouter `:free` models as backup.
 - Structured JSON decisions validated by the existing engine; demo officer as fallback.
 - Usage caps and timeouts so the free tier can't be exceeded silently.
+- LLM evaluator for the report's relevance and consistency dimensions (currently reported as not assessed).
 
 ## Planned
 

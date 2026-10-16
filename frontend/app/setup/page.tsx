@@ -7,6 +7,7 @@ import { InterviewSelector } from "@/components/setup/interview-selector";
 import { ContextForm } from "@/components/setup/context-form";
 import { DifficultySelector } from "@/components/setup/difficulty-selector";
 import { SetupSummary } from "@/components/setup/setup-summary";
+import { asset } from "@/lib/asset-path";
 
 export default function SetupPage() {
   const { currentStep, setStep } = useInterviewStore();
@@ -36,7 +37,7 @@ export default function SetupPage() {
             className="flex items-center shrink-0 hover:opacity-90 transition-opacity focus-visible:outline-none"
           >
             <img
-              src="/images/visora-logo-white.png"
+              src={asset("/images/visora-logo-white.png")}
               alt="Visora"
               className="h-3.5 sm:h-4 w-auto object-contain mix-blend-screen"
             />

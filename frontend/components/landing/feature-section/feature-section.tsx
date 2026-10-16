@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { UserCheck, Layers } from "lucide-react";
 import { TreeWorkflowPreview } from "./tree-workflow-preview";
 import { PipelinePreview } from "./pipeline-preview";
+import { asset } from "@/lib/asset-path";
 
 export function FeatureSection() {
   const containerRef = React.useRef<HTMLElement>(null);
@@ -183,7 +184,7 @@ export function FeatureSection() {
       >
         {/* Scenic Background Image */}
         <Image
-          src="/images/visora-features.jpg"
+          src={asset("/images/visora-features.jpg")}
           alt="Visora Features Scenic Architecture Backdrop"
           fill
           className="object-cover object-center"

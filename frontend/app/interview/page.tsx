@@ -29,6 +29,7 @@ import {
   VideoOff,
   X,
 } from "lucide-react";
+import { asset } from "@/lib/asset-path";
 
 const difficultyLabels: Record<string, string> = {
   comfortable: "Practice",
@@ -151,7 +152,7 @@ export default function InterviewRoomPage() {
           <div className="flex items-center justify-between gap-4 pb-2 shrink-0">
             <div className="flex items-center gap-3">
               <Link href="/" className="flex items-center gap-2 hover:opacity-85 transition-opacity">
-                <img src="/images/visora-logo-white.png" alt="Visora" className="h-4 sm:h-4.5 w-auto object-contain invert" />
+                <img src={asset("/images/visora-logo-white.png")} alt="Visora" className="h-4 sm:h-4.5 w-auto object-contain invert" />
               </Link>
               <div className="h-4 w-px bg-[#DCD5C9]" />
               <Link

@@ -5,12 +5,21 @@ import { CLOSE_SUPERSEDED, parseServerMessage, type ClientMessage, type Intervie
 import { initialRoomState, interviewRoomReducer } from "@/lib/realtime/interview-state";
 import { cacheReport } from "@/lib/realtime/report";
 
-export const INTERVIEW_WS_URL = process.env.NEXT_PUBLIC_INTERVIEW_WS_URL ?? "ws://localhost:4000/ws/interview";
+// `||`, not `??`: CI passes an empty string when no backend URL is configured.
+export const INTERVIEW_WS_URL = process.env.NEXT_PUBLIC_INTERVIEW_WS_URL || "ws://localhost:4000/ws/interview";
 
 /** Lets a page reload re-attach to the same backend session (the backend keeps it until idle expiry). */
 const SESSION_STORAGE_KEY = "visora-active-session";
 const MAX_RECONNECT_ATTEMPTS = 5;
 const KEEPALIVE_MS = 25_000;
+
+/** Developers running locally can start the backend; visitors to a static deployment cannot. */
+function unreachableMessage(): string {
+  const local = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+  return local
+    ? "Could not reach the interview server. Make sure the backend is running."
+    : "The interview server is not available on this hosted preview. To run a full interview, start Visora locally (see the README on GitHub).";
+}
 
 function readStoredSessionId(): string | null {
   try {
@@ -121,7 +130,7 @@ export function useInterviewSession(url: string = INTERVIEW_WS_URL) {
           dispatch({
             type: "disconnected",
             willRetry: false,
-            message: sessionId ? undefined : "Could not reach the interview server. Make sure the backend is running.",
+            message: sessionId ? undefined : unreachableMessage(),
           });
           return;
         }

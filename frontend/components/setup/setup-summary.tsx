@@ -17,6 +17,7 @@ import {
   Sparkles,
   UserCheck,
 } from "lucide-react";
+import { asset } from "@/lib/asset-path";
 
 export function SetupSummary() {
   const router = useRouter();
@@ -281,7 +282,7 @@ export function SetupSummary() {
           {/* Mode Visual Banner with Scenic Sky Background (Matches Card 01 Aspect Ratio) */}
           <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-[#EAE4DA] border border-[#E8E2D8]">
             <Image
-              src="/images/visora-mode-bg.jpg"
+              src={asset("/images/visora-mode-bg.jpg")}
               alt="Interview Atmosphere"
               fill
               className="object-cover object-[75%_25%]"

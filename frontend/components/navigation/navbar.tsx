@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { MAIN_NAV_ITEMS } from "@/lib/constants/navigation";
+import { asset } from "@/lib/asset-path";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
@@ -20,7 +21,7 @@ export function Navbar() {
           className="flex items-center shrink-0 hover:opacity-90 transition-opacity focus-visible:outline-none"
         >
           <img
-            src="/images/visora-logo-white.png"
+            src={asset("/images/visora-logo-white.png")}
             alt="Visora"
             className="h-3.5 sm:h-4 w-auto object-contain mix-blend-screen"
           />

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { asset } from "@/lib/asset-path";
 
 interface HeroImageProps {
   className?: string;
@@ -14,7 +15,7 @@ export function HeroImage({ className, imageRef }: HeroImageProps) {
       }`}
     >
       <img
-        src="/images/visora-hero.png"
+        src={asset("/images/visora-hero.png")}
         alt="VISORA Hero Artwork"
         width={1816}
         height={866}

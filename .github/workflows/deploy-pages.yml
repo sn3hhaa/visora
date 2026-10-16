@@ -1,0 +1,57 @@
+# Publishes the frontend as a static site to GitHub Pages: https://sn3hhaa.github.io/visora/
+# The interview backend (Fastify + WebSocket) cannot run on Pages; set the repository variable
+# INTERVIEW_WS_URL to a hosted backend's wss:// URL to make the interview room work there.
+name: Deploy frontend to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+        env:
+          STATIC_EXPORT: "true"
+          NEXT_PUBLIC_BASE_PATH: /visora
+          NEXT_PUBLIC_INTERVIEW_WS_URL: ${{ vars.INTERVIEW_WS_URL }}
+      - run: node scripts/flatten-rsc-payloads.mjs out
+      # Pages runs Jekyll by default, which drops the _next/ directory.
+      - run: touch out/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

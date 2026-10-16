@@ -8,6 +8,7 @@ import { INTERVIEW_WS_URL } from "@/hooks/use-interview-session";
 import { apiBaseUrl, cacheReport, fetchReport, readCachedReport, type SessionReport } from "@/lib/realtime/report";
 import { AnswerBreakdown } from "@/components/results/answer-breakdown";
 import { AssessedQualities, Feedback, MeasuredMetrics } from "@/components/results/report-summary";
+import { asset } from "@/lib/asset-path";
 
 type LoadState =
   | { status: "loading" }
@@ -144,7 +145,7 @@ export default function ResultsPage() {
       <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-4 pb-20 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between gap-4 py-5 border-b border-[#E6E0D6]">
           <Link href="/" className="hover:opacity-80 transition-opacity">
-            <img src="/images/visora-logo-white.png" alt="Visora" className="h-4 w-auto invert" />
+            <img src={asset("/images/visora-logo-white.png")} alt="Visora" className="h-4 w-auto invert" />
           </Link>
           <div className="flex items-center gap-2">
             <Link

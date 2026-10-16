@@ -1,4 +1,5 @@
 import { ContextDefinition } from "@/types/context";
+import { asset } from "@/lib/asset-path";
 
 export const INTERVIEW_CONTEXTS: ContextDefinition[] = [
   {
@@ -9,7 +10,7 @@ export const INTERVIEW_CONTEXTS: ContextDefinition[] = [
     headline: "Practice questions around your program, university, funding, and plans after graduation.",
     supporting:
       "Articulate your university choice, research focus, curriculum alignment, and long-term academic trajectory with calm conviction.",
-    image: "/images/context-academic.jpg",
+    image: asset("/images/context-academic.jpg"),
     topics: ["Institution Selection", "Funding Architecture", "Post-Study Intent", "Course Specifics"],
   },
   {
@@ -20,7 +21,7 @@ export const INTERVIEW_CONTEXTS: ContextDefinition[] = [
     headline: "Practice explaining your role, employer, work, qualifications, and expertise clearly.",
     supporting:
       "Clarify your specialized knowledge, employer relationships, technical responsibilities, and wage structure under direct questioning.",
-    image: "/images/visora-context-2.jpg",
+    image: asset("/images/visora-context-2.jpg"),
     topics: ["Specialty Occupation", "Employer Relationship", "Project Architecture", "Technical Depth"],
   },
   {
@@ -31,7 +32,7 @@ export const INTERVIEW_CONTEXTS: ContextDefinition[] = [
     headline: "Practice explaining your travel purpose, plans, finances, and reasons for returning.",
     supporting:
       "Communicate your itinerary, professional obligations, home country ties, and precise duration without hesitation.",
-    image: "/images/visora-context-3.jpg",
+    image: asset("/images/visora-context-3.jpg"),
     topics: ["Itinerary Precision", "Domestic Ties", "Financial Independence", "Travel Intent"],
   },
 ];

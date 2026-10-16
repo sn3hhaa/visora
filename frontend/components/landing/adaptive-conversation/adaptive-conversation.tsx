@@ -6,13 +6,14 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Cpu, CornerDownRight, UserCheck, MessageSquare, CheckCircle2, ArrowDown, HelpCircle, GitBranch } from "lucide-react";
 import { MOCK_ADAPTIVE_EXCHANGE } from "@/lib/mock/conversation";
+import { asset } from "@/lib/asset-path";
 
 interface AdaptiveConversationProps {
   imageSrc?: string;
 }
 
 export function AdaptiveConversation({
-  imageSrc = "/images/visora-adaptive.jpg",
+  imageSrc = asset("/images/visora-adaptive.jpg"),
 }: AdaptiveConversationProps) {
   const sectionRef = React.useRef<HTMLElement>(null);
   const headingRef = React.useRef<HTMLDivElement>(null);

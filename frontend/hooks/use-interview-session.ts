@@ -3,6 +3,7 @@
 import * as React from "react";
 import { CLOSE_SUPERSEDED, parseServerMessage, type ClientMessage, type InterviewSetupPayload } from "@/lib/realtime/protocol";
 import { initialRoomState, interviewRoomReducer } from "@/lib/realtime/interview-state";
+import { cacheReport } from "@/lib/realtime/report";
 
 export const INTERVIEW_WS_URL = process.env.NEXT_PUBLIC_INTERVIEW_WS_URL ?? "ws://localhost:4000/ws/interview";
 
@@ -96,6 +97,7 @@ export function useInterviewSession(url: string = INTERVIEW_WS_URL) {
           storeSessionId(completedRef.current ? null : message.sessionId);
         } else if (message.type === "interview_completed") {
           completedRef.current = true;
+          if (message.report) cacheReport(message.report);
           storeSessionId(null);
           closeSocket();
         } else if (message.type === "error" && message.code === "session_not_found") {

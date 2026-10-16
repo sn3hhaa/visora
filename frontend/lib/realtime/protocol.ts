@@ -5,6 +5,7 @@
  */
 import type { InterviewContextId } from "@/types/context";
 import type { B1B2Profile, F1Profile, H1BProfile, InterviewDifficulty } from "@/types/interview";
+import type { SessionReport } from "./report";
 
 export const PROTOCOL_VERSION = 1;
 export const MAX_ANSWER_CHARS = 4000;
@@ -67,7 +68,7 @@ export type ServerMessage =
   | { type: "agent_processing" }
   | { type: "next_question"; entry: TranscriptEntry; questionNumber: number; maxQuestions: number }
   | { type: "transcript_update"; entry: TranscriptEntry }
-  | { type: "interview_completed"; sessionId: string; reason: CompletionReason; closing: TranscriptEntry | null }
+  | { type: "interview_completed"; sessionId: string; reason: CompletionReason; closing: TranscriptEntry | null; report: SessionReport }
   | { type: "error"; code: ErrorCode; message: string; recoverable: boolean }
   | { type: "pong" };
 

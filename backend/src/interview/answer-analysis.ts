@@ -30,9 +30,24 @@ export function findHedges(text: string): string[] {
   return HEDGES.filter((hedge) => new RegExp(`[^a-z']${hedge}[^a-z']`).test(lower));
 }
 
-export function hasConcreteDetail(text: string): boolean {
-  if (/\d|[$₹€£]/.test(text)) return true;
-  // Capitalised words that are not the first word of a sentence and not "I".
+/** Words people use to fill silence. "like" is excluded: it is too often meaningful to count reliably. */
+const FILLERS = ["um", "umm", "uh", "uhh", "er", "erm", "hmm", "you know", "i mean", "basically", "actually", "literally"];
+
+/** Occurrences of each filler word, most frequent first. */
+export function findFillers(text: string): { word: string; count: number }[] {
+  const lower = ` ${text.toLowerCase().replace(/[’]/g, "'")} `;
+  return FILLERS.map((word) => ({ word, count: lower.match(new RegExp(`(?<=[^a-z'])${word}(?=[^a-z'])`, "g"))?.length ?? 0 }))
+    .filter((filler) => filler.count > 0)
+    .sort((a, b) => b.count - a.count);
+}
+
+/** Numbers, amounts or currency symbols. */
+export function hasFigures(text: string): boolean {
+  return /\d|[$₹€£]/.test(text);
+}
+
+/** Capitalised words that are not the first word of a sentence and not "I" — names of people, places, organisations. */
+export function hasNamedDetail(text: string): boolean {
   const sentences = text.split(/[.!?]+\s*/);
   return sentences.some((sentence) =>
     sentence
@@ -41,6 +56,10 @@ export function hasConcreteDetail(text: string): boolean {
       .slice(1)
       .some((word) => /^[A-Z][a-zA-Z]+/.test(word) && !/^I('|$)/.test(word)),
   );
+}
+
+export function hasConcreteDetail(text: string): boolean {
+  return hasFigures(text) || hasNamedDetail(text);
 }
 
 export function analyzeAnswer(text: string, policy: DifficultyPolicy): AnswerAnalysis {

@@ -14,6 +14,7 @@ import { CameraSettings } from "@/components/interview/camera-settings";
 import {
   AlertCircle,
   ArrowLeft,
+  ArrowRight,
   CheckCircle2,
   Home,
   Loader2,
@@ -358,6 +359,15 @@ export default function InterviewRoomPage() {
                       {COMPLETION_LABELS[state.completion?.reason ?? "candidate_ended"]} You answered{" "}
                       {state.transcript.filter((entry) => entry.role === "candidate").length} question(s).
                     </span>
+                    {state.sessionId && state.completion?.reason !== "expired" && (
+                      <Link
+                        href={`/results?session=${state.sessionId}`}
+                        className="mt-1.5 inline-flex items-center gap-1.5 self-start rounded-full bg-[#141414] px-3.5 py-1.5 text-[11.5px] font-semibold text-white hover:bg-[#2C332A] transition-colors"
+                      >
+                        View your results
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    )}
                   </div>
                 </div>
               ) : (

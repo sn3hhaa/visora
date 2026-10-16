@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { SessionReport } from "../analytics/report";
 import {
   interviewSetupSchema,
   type CompletionReason,
@@ -53,6 +54,6 @@ export type ServerMessage =
   | { type: "agent_processing" }
   | { type: "next_question"; entry: TranscriptEntry; questionNumber: number; maxQuestions: number }
   | { type: "transcript_update"; entry: TranscriptEntry }
-  | { type: "interview_completed"; sessionId: string; reason: CompletionReason; closing: TranscriptEntry | null }
+  | { type: "interview_completed"; sessionId: string; reason: CompletionReason; closing: TranscriptEntry | null; report: SessionReport }
   | { type: "error"; code: ErrorCode; message: string; recoverable: boolean }
   | { type: "pong" };

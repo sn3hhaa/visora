@@ -2,6 +2,7 @@ import Fastify, { type FastifyInstance } from "fastify";
 import cors from "@fastify/cors";
 import websocket from "@fastify/websocket";
 import type { WebSocket } from "ws";
+import { buildSessionReport } from "./analytics/report";
 import type { AppConfig } from "./config/env";
 import { InterviewEngine } from "./interview/engine";
 import { SessionManager } from "./interview/session-manager";
@@ -47,6 +48,20 @@ export async function buildApp(config: AppConfig, options: BuildAppOptions = {})
     activeSessions: sessions.size,
     timestamp: new Date().toISOString(),
   }));
+
+  // The session id is an unguessable UUIDv4 known only to the candidate's browser, so it doubles as the access token.
+  app.get<{ Params: { id: string } }>("/sessions/:id/report", async (request, reply) => {
+    const session = sessions.get(request.params.id);
+    if (!session) {
+      return reply.code(404).send({ error: "session_not_found", message: "This session does not exist or has expired." });
+    }
+    if (session.phase !== "completed") {
+      return reply.code(409).send({ error: "session_in_progress", message: "The report is available once the interview has ended." });
+    }
+    sessions.touch(session);
+    reply.header("Cache-Control", "no-store");
+    return buildSessionReport(session, engine.providerName);
+  });
 
   app.get("/ws/interview", { websocket: true }, (socket, request) => {
     const origin = request.headers.origin;

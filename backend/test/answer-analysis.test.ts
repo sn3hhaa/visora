@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { analyzeAnswer, countWords, findHedges, hasConcreteDetail } from "../src/interview/answer-analysis";
+import { analyzeAnswer, countWords, findFillers, findHedges, hasConcreteDetail } from "../src/interview/answer-analysis";
 import { DIFFICULTY_POLICIES } from "../src/interview/contexts";
 
 describe("answer analysis", () => {
@@ -20,6 +20,15 @@ describe("answer analysis", () => {
     expect(hasConcreteDetail("I will study at Carnegie Mellon")).toBe(true);
     expect(hasConcreteDetail("I like the university and the courses are good")).toBe(false);
     expect(hasConcreteDetail("Good question. I want to learn")).toBe(false);
+  });
+
+  it("counts filler words as whole words only", () => {
+    expect(findFillers("Um, so um I basically, you know, applied.")).toEqual([
+      { word: "um", count: 2 },
+      { word: "you know", count: 1 },
+      { word: "basically", count: 1 },
+    ]);
+    expect(findFillers("Umbrella insurance is actuarially sound")).toEqual([]);
   });
 
   it("applies the difficulty word threshold", () => {

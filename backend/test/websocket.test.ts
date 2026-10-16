@@ -46,6 +46,36 @@ describe("GET /health", () => {
   });
 });
 
+describe("GET /sessions/:id/report", () => {
+  it("returns the report only once the interview has ended", async () => {
+    const { http, connect } = await start();
+    const client = await connect();
+    client.send({ type: "session_start", setup: makeSetup("h1b") });
+    const { sessionId } = await client.next("session_started");
+    await client.next("next_question");
+
+    const early = await fetch(`${http}/sessions/${sessionId}/report`);
+    expect(early.status).toBe(409);
+
+    client.send({ type: "answer_submit", text: STRONG_ANSWER });
+    await client.next("next_question");
+    client.send({ type: "session_end" });
+    await client.next("interview_completed");
+
+    const response = await fetch(`${http}/sessions/${sessionId}/report`, { headers: { Origin: "http://localhost:3000" } });
+    expect(response.status).toBe(200);
+    expect(response.headers.get("access-control-allow-origin")).toBe("http://localhost:3000");
+    const report = await response.json();
+    expect(report).toMatchObject({ sessionId, context: "h1b", completionReason: "candidate_ended", measured: { answersGiven: 1 } });
+  });
+
+  it("returns 404 for unknown or malformed session ids", async () => {
+    const { http } = await start();
+    expect((await fetch(`${http}/sessions/00000000-0000-4000-8000-000000000000/report`)).status).toBe(404);
+    expect((await fetch(`${http}/sessions/not-a-uuid/report`)).status).toBe(404);
+  });
+});
+
 describe("interview WebSocket", () => {
   it("runs a complete interview from setup to conclusion", async () => {
     const { connect } = await start();
@@ -72,6 +102,8 @@ describe("interview WebSocket", () => {
 
     expect(completed).toMatchObject({ reason: "concluded", sessionId: started.sessionId });
     expect(completed!.closing.kind).toBe("closing");
+    expect(completed!.report).toMatchObject({ sessionId: started.sessionId, context: "f1", completionReason: "concluded" });
+    expect(completed!.report.answers.length).toBe(completed!.report.measured.answersGiven);
   });
 
   it("validates messages", async () => {

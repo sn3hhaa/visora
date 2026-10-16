@@ -1,5 +1,6 @@
 import type { FastifyBaseLogger } from "fastify";
 import { WebSocket, type RawData } from "ws";
+import { buildSessionReport } from "../analytics/report";
 import { DIFFICULTY_POLICIES } from "../interview/contexts";
 import { InterviewStateError, type InterviewEngine, type TurnResult } from "../interview/engine";
 import { SessionCapacityError, type SessionManager } from "../interview/session-manager";
@@ -69,7 +70,13 @@ export function handleInterviewSocket(socket: WebSocket, deps: InterviewSocketDe
     if (result.completed) {
       // Only a provider-concluded interview carries a closing remark; a candidate hang-up has already been reported.
       if (session.completionReason === "concluded") {
-        sendTo(target, { type: "interview_completed", sessionId: session.id, reason: "concluded", closing: result.officerEntry });
+        sendTo(target, {
+          type: "interview_completed",
+          sessionId: session.id,
+          reason: "concluded",
+          closing: result.officerEntry,
+          report: buildSessionReport(session, engine.providerName),
+        });
       }
       return;
     }
@@ -146,7 +153,13 @@ export function handleInterviewSocket(socket: WebSocket, deps: InterviewSocketDe
         engine.end(session, "candidate_ended");
         log.info({ sessionId: session.id }, "session ended by candidate");
       }
-      send({ type: "interview_completed", sessionId: session.id, reason: session.completionReason ?? "candidate_ended", closing: null });
+      send({
+        type: "interview_completed",
+        sessionId: session.id,
+        reason: session.completionReason ?? "candidate_ended",
+        closing: null,
+        report: buildSessionReport(session, engine.providerName),
+      });
     },
   };
 

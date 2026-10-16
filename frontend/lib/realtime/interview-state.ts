@@ -1,4 +1,5 @@
 import type { CompletionReason, ErrorCode, ServerMessage, TranscriptEntry } from "./protocol";
+import type { SessionReport } from "./report";
 
 export type ConnectionStatus = "idle" | "connecting" | "open" | "reconnecting" | "closed";
 
@@ -13,7 +14,8 @@ export interface InterviewRoomState {
   questionNumber: number;
   maxQuestions: number;
   transcript: TranscriptEntry[];
-  completion: { reason: CompletionReason; closing: TranscriptEntry | null } | null;
+  /** `report` is null when the room re-attached to an already-finished session; fetch it over HTTP instead. */
+  completion: { reason: CompletionReason; closing: TranscriptEntry | null; report: SessionReport | null } | null;
   error: { code: ErrorCode | "connection"; message: string; recoverable: boolean } | null;
 }
 
@@ -100,7 +102,7 @@ function applyServerMessage(state: InterviewRoomState, message: ServerMessage): 
       return {
         ...state,
         phase: "completed",
-        completion: { reason: message.reason, closing: message.closing },
+        completion: { reason: message.reason, closing: message.closing, report: message.report ?? null },
         transcript: message.closing ? appendEntry(state.transcript, message.closing) : state.transcript,
       };
     case "error": {

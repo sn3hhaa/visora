@@ -9,6 +9,8 @@
 
 An adaptive AI interview environment for US visa interview practice — a consular officer that listens to your answers, probes what's vague, and remembers what you said.
 
+**GitHub:** [github.com/sn3hhaa/visora](https://github.com/sn3hhaa/visora)
+
 <p>
   <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white">
   <img alt="React" src="https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white">
